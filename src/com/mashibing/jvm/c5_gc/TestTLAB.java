@@ -16,13 +16,18 @@ public class TestTLAB {
     }
 
     void alloc(int i) {
+        //user对象没有逃逸
         new User(i, "name " + i);
+        //user对象有逃逸
+        User user = new User(i, "name " + i);
     }
 
     public static void main(String[] args) {
         TestTLAB t = new TestTLAB();
         long start = System.currentTimeMillis();
-        for(int i=0; i<1000_0000; i++) t.alloc(i);
+        for(int i=0; i<1000_0000; i++) {
+            t.alloc(i);
+        }
         long end = System.currentTimeMillis();
         System.out.println(end - start);
 
